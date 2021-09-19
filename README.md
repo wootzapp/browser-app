@@ -1,4 +1,4 @@
-# web_viewer
+# WootzApp
 
 A new Flutter project.
 

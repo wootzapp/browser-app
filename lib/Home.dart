@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/platform_interface.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:iconsax/iconsax.dart';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
-
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter/services.dart';
 import 'package:uni_links/uni_links.dart';
 
@@ -23,7 +22,7 @@ class _HomeState extends State<Home> {
 
   StreamSubscription? _sub;
 
-  String urlTo = 'https://google.lk';
+  String urlTo = 'https://pancakeswap.finance/';
 
   final urlController = TextEditingController();
 
@@ -98,6 +97,39 @@ class _HomeState extends State<Home> {
         .toString());
   }
 
+
+  // ignore: non_constant_identifier_names
+  JavascriptChannel eth_requestAccounts(BuildContext context) =>
+      JavascriptChannel(
+          name: 'eth_requestAccounts',
+          onMessageReceived: (JavascriptMessage message) async {
+          
+            showCupertinoModalBottomSheet(
+              expand: false,
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => const SizedBox(
+                height: 250,
+                child: Scaffold(
+                  backgroundColor: Color.fromARGB(255, 204, 204, 255),
+                  body: Center(
+                      child: Text(
+                    'Hello Meta mask',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  )),
+                ),
+              ),
+            );
+          });
+
+  JavascriptChannel test(BuildContext context) => JavascriptChannel(
+      name: 'test', 
+      onMessageReceived: (JavascriptMessage message) async {
+       
+      });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -163,7 +195,8 @@ class _HomeState extends State<Home> {
                                 onPressed: !webViewReady
                                     ? null
                                     : () {
-                                        controller.reload();
+                                         controller.reload();
+                                        
                                       },
                               ),
                               Expanded(
@@ -230,20 +263,24 @@ class _HomeState extends State<Home> {
                       onPageFinished: (String url) async {
                         WebViewController webViewController =
                             await _webViewController.future;
-                            String trust =
-                            await rootBundle.loadString("assets/trust_ios.js");
+                        String trust =
+                            await rootBundle.loadString("assets/trust.js");
                         String init =
                             await rootBundle.loadString("assets/init.js");
-                        
+
                         await webViewController.evaluateJavascript(trust);
                         await webViewController.evaluateJavascript(init);
 
                         urlController.text =
                             (await webViewController.currentUrl()).toString();
 
-                        setState(()  {
+                        setState(() {
                           indexPosition = 0;
                         });
+                      },
+                      javascriptChannels: <JavascriptChannel>{
+                        eth_requestAccounts(context),
+                        test(context)
                       },
                       onWebResourceError: (WebResourceError error) async {
                         loadHtmlFromAssets('assets/error_page.html',

@@ -1,6 +1,6 @@
 {
-    "name": "web_viewer",
-    "short_name": "web_viewer",
+    "name": "WootzApp",
+    "short_name": "WootzApp",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
