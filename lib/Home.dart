@@ -97,13 +97,26 @@ class _HomeState extends State<Home> {
         .toString());
   }
 
-
   // ignore: non_constant_identifier_names
   JavascriptChannel eth_requestAccounts(BuildContext context) =>
       JavascriptChannel(
           name: 'eth_requestAccounts',
           onMessageReceived: (JavascriptMessage message) async {
-          
+            var messageList = message.message.split("#");
+            var id = messageList[0];
+            print("hi all"+id.toString());
+            if (id.length > 4) {
+              String responseString =
+                  "window.ethereum.sendResponse($id, ['123231'])";
+//        String errorString = "window.ethereum.sendError(${messageList[0]},[])";
+              WebViewController webViewController =
+                  await _webViewController.future;
+              webViewController
+                  .evaluateJavascript(responseString)
+                  .then((value) {
+                print(value);
+              });
+            }
             showCupertinoModalBottomSheet(
               expand: false,
               context: context,
@@ -125,10 +138,7 @@ class _HomeState extends State<Home> {
           });
 
   JavascriptChannel test(BuildContext context) => JavascriptChannel(
-      name: 'test', 
-      onMessageReceived: (JavascriptMessage message) async {
-       
-      });
+      name: 'test', onMessageReceived: (JavascriptMessage message) async {});
 
   @override
   Widget build(BuildContext context) {
@@ -195,8 +205,7 @@ class _HomeState extends State<Home> {
                                 onPressed: !webViewReady
                                     ? null
                                     : () {
-                                         controller.reload();
-                                        
+                                        controller.reload();
                                       },
                               ),
                               Expanded(

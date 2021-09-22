@@ -1,0 +1,30 @@
+{
+  "name": "android",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "liquidcore server",
+    "bundler": "liquidcore bundle",
+    "init": "liquidcore init",
+    "gradle-config": "liquidcore gradle",
+    "pod-config": "liquidcore pod",
+    "postinstall": "liquidcore postinstall"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "liquidcore": "^0.7.10"
+  },
+  "liquidcore": {
+    "entry": [
+      "example.js"
+    ],
+    "gradle_options": {
+      "module": "app"
+    },
+    "bundler_output": {
+      "android": "app/src/main/res/raw"
+    }
+  }
+}
