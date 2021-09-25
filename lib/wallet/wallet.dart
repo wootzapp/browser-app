@@ -11,18 +11,8 @@ class Wallet {
     required this.publicKey,
   });
 
-  /// Create a random wallet
-  ///
-  /// Returns a new [Wallet] with a random private key. You can provide optional
-  /// creation options with [extraEntropy] as a hex string that provides some
-  /// extra entropy to the randomization.
-  ///
-  /// ```
-  ///   final wallet = await Wallet.createRandom(extraEntropy: '0xbaadf00d');
-  /// ```
-  ///
-  /// See original documentation
-  ///   - https://docs.ethers.io/v5/api/signer/#Wallet-createRandom
+ 
+ 
   static Future<Wallet> createRandom({String? extraEntropy}) async {
     final JavascriptRuntime jsRuntime = getJavascriptRuntime();
     //  jsRuntime.evaluate('var window = global = globalThis;');

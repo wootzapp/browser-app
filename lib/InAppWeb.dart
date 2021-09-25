@@ -1,10 +1,7 @@
 import 'dart:collection';
-// import 'dart:js_util';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_js/flutter_js.dart';
-// import 'package:flutter_web3_provider/ethereum.dart';
-// import 'package:flutter_web3_provider/ethers.dart';
 import 'dart:async';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'dart:io';
@@ -248,24 +245,23 @@ class _InAppWebState extends State<InAppWeb> {
                     onPostMessage:
                         (message, sourceOrigin, isMainFrame, replyProxy) async {
                           
-//                       final wallet = await Wallet.createRandom(extraEntropy: '0xbaadf00d');
+                      final wallet = await Wallet.createRandom(extraEntropy: '0xbaadf00d');
 
-//                       String address = wallet.address;
-//                       var messageList = message!.split("#");
-//                       var id = messageList[0];
-//                       print("hi all" + address);
+                      String address = wallet.address;
+                      var messageList = message!.split("#");
+                      var id = messageList[0];
+                      print("hi all" + address);
 
-//                       if (id.length > 4) {
-//                         String responseString =
-//                             "window.ethereum.sendResponse($id, ['$address'])";
-// //        String errorString = "window.ethereum.sendError(${messageList[0]},[])";
+                      if (id.length > 4) {
+                        String responseString =
+                            "window.ethereum.sendResponse($id, ['$address'])";
 
-//                         await webViewController
-//                             ?.evaluateJavascript(source: responseString)
-//                             .then((value) {
-//                           print(value);
-//                         });
-//                       }
+                        await webViewController
+                            ?.evaluateJavascript(source: responseString)
+                            .then((value) {
+                          print(value);
+                        });
+                      }
 
                       showCupertinoModalBottomSheet(
                         expand: false,
